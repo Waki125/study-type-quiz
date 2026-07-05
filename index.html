@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>勉強タイプ診断|10問でわかるあなたの学習スタイル</title>
+<meta name="description" content="現役医学生×指導歴4年の講師が作った勉強タイプ診断。10問に答えるだけで、あなたに合った勉強法・参考書の選び方がわかります。無料・登録不要。">
+<!-- OGP: 公開時にURLと画像を差し替え -->
+<meta property="og:title" content="勉強タイプ診断|10問でわかるあなたの学習スタイル">
+<meta property="og:description" content="あなたは戦略家?職人?ハンター?スプリンター?10問で自分に合う勉強法がわかる無料診断。">
+<meta property="og:type" content="website">
+<style>
+  :root {
+    --primary: #4f6df5;
+    --primary-dark: #3a54c4;
+    --accent: #ffb547;
+    --bg: #f6f7fb;
+    --card: #ffffff;
+    --text: #2b2f3a;
+    --muted: #6b7280;
+    --radius: 16px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic UI", "Meiryo", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 560px; margin: 0 auto; padding: 24px 16px 64px; }
+
+  /* ---------- 共通パーツ ---------- */
+  .card {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 28px 24px;
+    box-shadow: 0 4px 24px rgba(43, 47, 58, .07);
+  }
+  .btn {
+    display: block;
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 999px;
+    background: var(--primary);
+    color: #fff;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform .12s ease, background .12s ease;
+  }
+  .btn:hover { background: var(--primary-dark); transform: translateY(-1px); }
+  .btn.ghost {
+    background: transparent;
+    color: var(--primary);
+    border: 2px solid var(--primary);
+  }
+  .btn.ghost:hover { background: rgba(79, 109, 245, .08); }
+  .hidden { display: none !important; }
+  .fade-in { animation: fadeIn .35s ease both; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  /* ---------- ヘッダー ---------- */
+  header { text-align: center; padding: 16px 0 24px; }
+  header .logo {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    color: var(--primary);
+  }
+
+  /* ---------- スタート画面 ---------- */
+  #start h1 {
+    font-size: 26px;
+    line-height: 1.4;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+  #start .sub {
+    text-align: center;
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+  .type-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 20px 0 28px;
+  }
+  .type-chip {
+    background: var(--bg);
+    border-radius: 12px;
+    padding: 12px 10px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .type-chip .emoji { display: block; font-size: 26px; margin-bottom: 4px; }
+  .credential {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #fff8ec;
+    border-radius: 12px;
+    padding: 12px 14px;
+    font-size: 13px;
+    color: #7a5a1e;
+    margin-bottom: 24px;
+  }
+  .credential .badge { font-size: 22px; }
+
+  /* ---------- 質問画面 ---------- */
+  .progress-track {
+    height: 8px;
+    background: #e5e8f2;
+    border-radius: 999px;
+    overflow: hidden;
+    margin-bottom: 8px;
+  }
+  .progress-bar {
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, var(--primary), #7b93ff);
+    border-radius: 999px;
+    transition: width .3s ease;
+  }
+  .progress-label {
+    font-size: 12px;
+    color: var(--muted);
+    text-align: right;
+    margin-bottom: 16px;
+  }
+  #question-text {
+    font-size: 19px;
+    font-weight: 700;
+    margin-bottom: 22px;
+    min-height: 3.4em;
+  }
+  .choice {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 16px 18px;
+    margin-bottom: 12px;
+    border: 2px solid #e5e8f2;
+    border-radius: 12px;
+    background: #fff;
+    font-size: 15px;
+    line-height: 1.6;
+    cursor: pointer;
+    transition: border-color .12s ease, background .12s ease;
+  }
+  .choice:hover { border-color: var(--primary); background: rgba(79, 109, 245, .05); }
+  .back-link {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 13px;
+    color: var(--muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
+  /* ---------- 結果画面 ---------- */
+  #result .type-emoji { font-size: 64px; text-align: center; display: block; }
+  #result .type-label {
+    text-align: center;
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 8px;
+  }
+  #result h2 {
+    text-align: center;
+    font-size: 26px;
+    color: var(--primary);
+    margin: 4px 0 4px;
+  }
+  #result .catch {
+    text-align: center;
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+  .section-title {
+    font-size: 15px;
+    font-weight: 700;
+    margin: 22px 0 8px;
+    padding-left: 10px;
+    border-left: 4px solid var(--accent);
+  }
+  .advice-list { list-style: none; }
+  .advice-list li {
+    position: relative;
+    padding-left: 26px;
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+  .advice-list li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--primary);
+    font-weight: 700;
+  }
+  .reco-box {
+    background: var(--bg);
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  .reco-box .reco-name { font-weight: 700; }
+  .reco-box .reco-note { font-size: 12px; color: var(--muted); }
+  .cta {
+    background: linear-gradient(135deg, #4f6df5, #7b93ff);
+    border-radius: var(--radius);
+    padding: 24px 20px;
+    text-align: center;
+    color: #fff;
+    margin-top: 24px;
+  }
+  .cta p { font-size: 14px; margin-bottom: 14px; }
+  .cta .btn { background: #fff; color: var(--primary); }
+  .cta .btn:hover { background: #f0f3ff; }
+  .share-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  .share-btn {
+    flex: 1;
+    display: block;
+    text-align: center;
+    padding: 13px 0;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    color: #fff;
+  }
+  .share-x { background: #0f1419; }
+  .share-line { background: #06c755; }
+  #restart { margin-top: 24px; }
+
+  footer {
+    text-align: center;
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 40px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="logo">STUDY TYPE CHECK</div>
+  </header>
+
+  <!-- ========== スタート画面 ========== -->
+  <div id="start" class="card fade-in">
+    <h1>勉強タイプ診断</h1>
+    <p class="sub">10問に答えるだけで、あなたに合った<br>勉強法と参考書の選び方がわかります</p>
+    <div class="type-grid">
+      <div class="type-chip"><span class="emoji">🧭</span>戦略家タイプ</div>
+      <div class="type-chip"><span class="emoji">🔨</span>職人タイプ</div>
+      <div class="type-chip"><span class="emoji">🏹</span>ハンタータイプ</div>
+      <div class="type-chip"><span class="emoji">⚡</span>スプリンタータイプ</div>
+    </div>
+    <div class="credential">
+      <span class="badge">🩺</span>
+      <span>この診断は<strong>現役医学生 × 指導歴4年</strong>の講師が、生徒指導の経験をもとに設計しています。</span>
+    </div>
+    <button class="btn" onclick="startQuiz()">診断をはじめる(無料・約1分)</button>
+  </div>
+
+  <!-- ========== 質問画面 ========== -->
+  <div id="quiz" class="card hidden">
+    <div class="progress-track"><div class="progress-bar" id="progress"></div></div>
+    <div class="progress-label" id="progress-label"></div>
+    <div id="question-text"></div>
+    <button class="choice" id="choice-a" onclick="answer('A')"></button>
+    <button class="choice" id="choice-b" onclick="answer('B')"></button>
+    <button class="back-link" id="back" onclick="goBack()">← ひとつ前に戻る</button>
+  </div>
+
+  <!-- ========== 結果画面 ========== -->
+  <div id="result" class="hidden">
+    <div class="card fade-in">
+      <span class="type-emoji" id="r-emoji"></span>
+      <div class="type-label">あなたの勉強タイプは…</div>
+      <h2 id="r-name"></h2>
+      <p class="catch" id="r-catch"></p>
+      <p id="r-desc" style="font-size:14px;"></p>
+
+      <div class="section-title">💪 あなたの強み</div>
+      <p id="r-strength" style="font-size:14px;"></p>
+
+      <div class="section-title">⚠️ 気をつけたい落とし穴</div>
+      <p id="r-weakness" style="font-size:14px;"></p>
+
+      <div class="section-title">📝 講師からのアドバイス</div>
+      <ul class="advice-list" id="r-advice"></ul>
+
+      <div class="section-title">📚 このタイプに合う教材の選び方</div>
+      <div id="r-reco"></div>
+      <!-- ▼▼ アフィリエイト枠:公開時にASP/Amazonのリンクを挿入 ▼▼ -->
+      <!-- 例: <a href="AMAZON_AFFILIATE_URL" class="reco-box">…</a> -->
+      <!-- ▲▲ アフィリエイト枠ここまで ▲▲ -->
+
+      <div class="share-row">
+        <a class="share-btn share-x" id="share-x" target="_blank" rel="noopener">Xでシェア</a>
+        <a class="share-btn share-line" id="share-line" target="_blank" rel="noopener">LINEで送る</a>
+      </div>
+    </div>
+
+    <!-- 自社サービス導線:公開時にURLを設定 -->
+    <div class="cta">
+      <p><strong>診断だけで終わらせない。</strong><br>あなたのタイプに合わせた勉強法を、マンツーマンで設計します。</p>
+      <a href="#" id="cta-link"><button class="btn">オンライン個別指導について見てみる</button></a>
+    </div>
+
+    <button class="btn ghost" id="restart" onclick="restart()">もう一度診断する</button>
+  </div>
+
+  <footer>© 2026 STUDY TYPE CHECK</footer>
+</div>
+
+<script>
+// ===== 設問定義 =====
+// axis: "plan"   … A=計画型 / B=瞬発型
+// axis: "learn"  … A=理解型 / B=反復型
+const QUESTIONS = [
+  { axis: "plan",
+    q: "Q. テスト2週間前。最初にやることは?",
+    a: "計画表を作って全体の配分を決める",
+    b: "とりあえず一番気になる科目から手を付ける" },
+  { axis: "learn",
+    q: "Q. 新しい公式や用語に出会ったら?",
+    a: "「なぜそうなるのか」を先に理解したい",
+    b: "まず使い方を覚えて、問題を解きながら慣れる" },
+  { axis: "plan",
+    q: "Q. 夏休みの宿題、あなたはどっち派だった?",
+    a: "前半のうちに終わらせる派",
+    b: "最終週に一気に追い込む派" },
+  { axis: "learn",
+    q: "Q. 暗記モノ(英単語・年号など)は?",
+    a: "意味や背景とセットにしないと覚えられない",
+    b: "書いて・唱えて、回数を重ねて覚える" },
+  { axis: "plan",
+    q: "Q. 勉強の記録(時間・ページ数)をつけるのは?",
+    a: "好き。記録があると落ち着く",
+    b: "正直めんどう。続いたことがない" },
+  { axis: "learn",
+    q: "Q. 授業で一番「頭に入った」と感じるのは?",
+    a: "仕組みや理由を説明してもらえた時",
+    b: "例題をたくさん解いた時" },
+  { axis: "plan",
+    q: "Q. 参考書の使い方は?",
+    a: "1冊決めて最初から順番に進める",
+    b: "気分やその日の目的でつまみ食いする" },
+  { axis: "learn",
+    q: "Q. わからない問題に当たったら?",
+    a: "解説を読み込んで、納得するまで考える",
+    b: "答えを見て、解き方ごと体で覚える" },
+  { axis: "plan",
+    q: "Q. 締切のない勉強(資格・検定など)は?",
+    a: "自分で締切を決めれば進められる",
+    b: "締切がないと正直あまり進まない" },
+  { axis: "learn",
+    q: "Q. 友達に「なんでこうなるの?」と聞かれたら?",
+    a: "説明するのは得意なほう。むしろ好き",
+    b: "「そういうものだから」と思うことが多い" },
+];
+
+// ===== タイプ定義 =====
+const TYPES = {
+  strategist: {
+    emoji: "🧭",
+    name: "戦略家タイプ",
+    catch: "計画 × 理解|全体を見渡してから攻める司令塔",
+    desc: "全体像をつかみ、納得してから進みたいタイプ。計画を立てる力と「なぜ?」を追う力が両方あるので、正しく使えば最も伸びしろの大きいタイプです。",
+    strength: "長期戦に強く、模試や本番から逆算した勉強ができます。一度理解したことは応用が利き、初見の問題にも対応しやすいのが武器です。",
+    weakness: "「完璧に理解してから次へ」にこだわりすぎて、演習量が不足しがち。計画作りそのものに時間をかけすぎる傾向もあります。",
+    advice: [
+      "計画は「週単位のざっくり計画+今日やる3つ」の2段階だけにする",
+      "理解7割で演習に入る。残り3割は問題を解きながら埋まる",
+      "週に1回、計画の見直しタイムを固定する(日曜夜など)"
+    ],
+    reco: [
+      { name: "講義系参考書(「なぜ」を説明してくれる網羅型)", note: "理解欲を満たしつつ全体像がつかめる1冊を軸に" },
+      { name: "学習管理アプリ・スタディプランナー", note: "計画力をそのまま得点力に変換できる" }
+    ]
+  },
+  craftsman: {
+    emoji: "🔨",
+    name: "積み上げ職人タイプ",
+    catch: "計画 × 反復|毎日コツコツが最強の武器",
+    desc: "決めたことを淡々と続けられるタイプ。派手さはないものの、受験・資格試験で最終的に勝つのはこのタイプです。習慣化の才能があります。",
+    strength: "反復に耐えられるので、暗記科目・計算力・基礎の定着度は4タイプ中No.1。積み上げた量がそのまま自信になります。",
+    weakness: "「こなすこと」が目的化して、できない問題より作業しやすい問題を選びがち。理由を飛ばして丸暗記に頼ると、応用問題で伸び悩みます。",
+    advice: [
+      "復習に「思い出す練習(テスト形式)」を混ぜる。読むだけの復習は卒業",
+      "週1回だけ「なぜこうなる?」を考える日を作り、丸暗記を点検する",
+      "間違えた問題だけのノートを作ると、反復の効率が倍になる"
+    ],
+    reco: [
+      { name: "ドリル・一問一答系の問題集", note: "反復のリズムに乗りやすく、達成感も積み上がる" },
+      { name: "暗記カードアプリ(分散学習型)", note: "忘れかけた頃に出題してくれるので反復が最適化される" }
+    ]
+  },
+  hunter: {
+    emoji: "🏹",
+    name: "探究ハンタータイプ",
+    catch: "瞬発 × 理解|興味に火がつくと止まらない",
+    desc: "「面白い」と思った瞬間の集中力と吸収力が武器のタイプ。興味駆動なので、勉強を「作業」にした瞬間に失速します。火のつけ方がすべてです。",
+    strength: "好きな分野の理解の深さと速さは4タイプ中No.1。一点突破で得意科目を作り、それを自信の土台にできます。",
+    weakness: "興味のない科目・単元の放置が最大のリスク。また計画を立てても3日で忘れるため、長期の積み上げが苦手です。",
+    advice: [
+      "苦手科目は「25分だけやる」のタイマー方式で。始めれば意外と火がつく",
+      "計画は立てない。かわりに「今日やる1テーマ」だけ決めて深掘りする",
+      "得意分野は人に説明する機会を作る(SNS・友人)。理解が定着し武器になる"
+    ],
+    reco: [
+      { name: "読み物系参考書・図解が豊富な本", note: "「面白い」が入口になる教材が相性抜群" },
+      { name: "動画講義サービス", note: "興味の火種を短時間で見つけられる" }
+    ]
+  },
+  sprinter: {
+    emoji: "⚡",
+    name: "短期集中スプリンタータイプ",
+    catch: "瞬発 × 反復|追い込まれた時の爆発力No.1",
+    desc: "締切が近づくほど力が出るタイプ。一夜漬けの成功体験が多いはず。この瞬発力は本物なので、否定せずに「締切を人工的に増やす」のが攻略法です。",
+    strength: "短時間の詰め込み・集中力は4タイプ中No.1。直前期の伸びが大きく、本番に強いタイプでもあります。",
+    weakness: "締切がないと動けないため、範囲の広い試験(受験・国家試験)では直前だけで間に合わなくなります。詰め込んだ知識が抜けるのも早めです。",
+    advice: [
+      "週1回、小さな締切を作る(単語テスト・過去問1年分など)",
+      "「毎日2時間」ではなく「週3回の集中スプリント」で設計する",
+      "詰め込んだ翌日に5分だけ復習する。これだけで定着率が大きく変わる"
+    ],
+    reco: [
+      { name: "過去問・模試形式の問題集", note: "締切と本番感覚を人工的に作れる最強の教材" },
+      { name: "短期集中型の講座・合宿系サービス", note: "スプリント設計と相性が良い" }
+    ]
+  }
+};
+
+// ===== 状態 =====
+let current = 0;
+const answers = [];
+
+const $ = (id) => document.getElementById(id);
+
+function startQuiz() {
+  current = 0;
+  answers.length = 0;
+  $("start").classList.add("hidden");
+  $("result").classList.add("hidden");
+  $("quiz").classList.remove("hidden");
+  render();
+}
+
+function render() {
+  const q = QUESTIONS[current];
+  $("progress").style.width = (current / QUESTIONS.length * 100) + "%";
+  $("progress-label").textContent = (current + 1) + " / " + QUESTIONS.length;
+  $("question-text").textContent = q.q;
+  $("choice-a").textContent = q.a;
+  $("choice-b").textContent = q.b;
+  $("back").style.visibility = current === 0 ? "hidden" : "visible";
+  $("quiz").classList.remove("fade-in");
+  void $("quiz").offsetWidth; // アニメーション再発火
+  $("quiz").classList.add("fade-in");
+}
+
+function answer(choice) {
+  answers[current] = choice;
+  if (current < QUESTIONS.length - 1) {
+    current++;
+    render();
+  } else {
+    showResult();
+  }
+}
+
+function goBack() {
+  if (current > 0) {
+    current--;
+    render();
+  }
+}
+
+function judge() {
+  let planA = 0, learnA = 0;
+  QUESTIONS.forEach((q, i) => {
+    if (answers[i] === "A") {
+      if (q.axis === "plan") planA++;
+      else learnA++;
+    }
+  });
+  const isPlanner = planA >= 3;   // 各軸5問なので同点なし
+  const isUnderstander = learnA >= 3;
+  if (isPlanner && isUnderstander) return "strategist";
+  if (isPlanner && !isUnderstander) return "craftsman";
+  if (!isPlanner && isUnderstander) return "hunter";
+  return "sprinter";
+}
+
+function showResult() {
+  const type = TYPES[judge()];
+  $("quiz").classList.add("hidden");
+  $("result").classList.remove("hidden");
+
+  $("r-emoji").textContent = type.emoji;
+  $("r-name").textContent = type.name;
+  $("r-catch").textContent = type.catch;
+  $("r-desc").textContent = type.desc;
+  $("r-strength").textContent = type.strength;
+  $("r-weakness").textContent = type.weakness;
+
+  $("r-advice").innerHTML = "";
+  type.advice.forEach(a => {
+    const li = document.createElement("li");
+    li.textContent = a;
+    $("r-advice").appendChild(li);
+  });
+
+  $("r-reco").innerHTML = "";
+  type.reco.forEach(r => {
+    const div = document.createElement("div");
+    div.className = "reco-box";
+    div.innerHTML = '<div class="reco-name">' + r.name + '</div><div class="reco-note">' + r.note + '</div>';
+    $("r-reco").appendChild(div);
+  });
+
+  // シェアリンク(公開時にURLを本番のものへ)
+  const siteUrl = location.href.split("#")[0];
+  const text = "私の勉強タイプは【" + type.name + "】でした!\n10問でわかる勉強タイプ診断↓";
+  $("share-x").href = "https://twitter.com/intent/tweet?text=" +
+    encodeURIComponent(text) + "&url=" + encodeURIComponent(siteUrl);
+  $("share-line").href = "https://social-plugins.line.me/lineit/share?url=" +
+    encodeURIComponent(siteUrl) + "&text=" + encodeURIComponent(text);
+
+  window.scrollTo({ top: 0, behavior: "instant" });
+}
+
+function restart() {
+  startQuiz();
+}
+</script>
+</body>
+</html>
