@@ -257,6 +257,24 @@
   }
   footer a { color: var(--muted); margin: 0 8px; }
   footer p { margin-top: 6px; }
+  .column-link {
+    display: block;
+    font-size: 14px;
+    color: var(--text);
+    text-decoration: none;
+    padding: 10px 4px;
+    border-bottom: 1px solid #eef0f6;
+  }
+  .column-link:hover { color: var(--primary); }
+  .column-more {
+    display: block;
+    text-align: right;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--primary);
+    text-decoration: none;
+    padding-top: 12px;
+  }
 </style>
 </head>
 <body>
@@ -329,6 +347,17 @@
     </div>
 
     <button class="btn ghost" id="restart" onclick="restart()">もう一度診断する</button>
+  </div>
+
+  <!-- 勉強法コラム導線 -->
+  <div class="card" style="margin-top:20px;">
+    <div class="section-title">📖 勉強法コラム</div>
+    <a class="column-link" href="articles/test-2weeks.html">【タイプ別】定期テスト2週間前からの過ごし方</a>
+    <a class="column-link" href="articles/memorization-curve.html">医学生が実践する、忘れない暗記法(忘却曲線の使い方)</a>
+    <a class="column-link" href="articles/planning-for-non-planners.html">「計画が続かない人」のための計画の立て方</a>
+    <a class="column-link" href="articles/one-book-or-many.html">参考書は1冊主義か、複数冊か</a>
+    <a class="column-link" href="articles/students-who-grow.html">指導歴4年で見えた「伸びる子」の5つの共通点</a>
+    <a class="column-more" href="articles/">コラム一覧を見る →</a>
   </div>
 
   <footer>
