@@ -21,6 +21,9 @@
   p, li { font-size:14.5px; margin-bottom:12px; }
   ul, ol { padding-left:22px; }
   strong { background:linear-gradient(transparent 65%, #ffe9c2 65%); }
+  figure { margin:20px 0 24px; background:#fbfcfe; border:1px solid #eef0f6; border-radius:12px; padding:16px 12px 12px; }
+  figure svg { width:100%; height:auto; display:block; }
+  figcaption { font-size:12px; color:var(--muted); line-height:1.7; margin-top:8px; padding:0 6px; }
   table { width:100%; border-collapse:collapse; font-size:13.5px; margin:12px 0; }
   th, td { border:1px solid #e5e8f2; padding:8px 10px; text-align:left; }
   th { background:var(--bg); }
@@ -47,6 +50,44 @@
     <h2>前提:人は覚えた直後から猛スピードで忘れる</h2>
     <p>心理学者エビングハウスの研究に由来する「忘却曲線」という有名なグラフがあります。要点はシンプルで、<strong>記憶は覚えた直後に最も速く失われ、時間とともに失われ方が緩やかになる</strong>ということ。一晩経てば、覚えたことの半分以上が思い出せなくなるのは、脳の仕様であって、あなたの能力の問題ではありません。</p>
     <p>重要なのはここからです。<strong>忘れかけたタイミングで復習すると、記憶は前より強く定着し、忘れるスピードが遅くなります</strong>。つまり暗記の本質は「覚えること」ではなく「復習のタイミング設計」です。</p>
+
+    <figure>
+      <svg viewBox="0 0 640 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="忘却曲線の模式図。復習しない場合は記憶が急速に失われるが、復習のたびに記憶が回復し、忘れる速さが緩やかになる。">
+        <!-- 軸 -->
+        <line x1="60" y1="40" x2="60" y2="330" stroke="#2b2f3a" stroke-width="1.5"/>
+        <line x1="60" y1="330" x2="620" y2="330" stroke="#2b2f3a" stroke-width="1.5"/>
+        <!-- 目盛り(縦) -->
+        <line x1="60" y1="60" x2="620" y2="60" stroke="#e5e8f2" stroke-dasharray="4 4"/>
+        <line x1="60" y1="195" x2="620" y2="195" stroke="#e5e8f2" stroke-dasharray="4 4"/>
+        <text x="52" y="64" text-anchor="end" font-size="12" fill="#6b7280">100%</text>
+        <text x="52" y="199" text-anchor="end" font-size="12" fill="#6b7280">50%</text>
+        <text x="52" y="334" text-anchor="end" font-size="12" fill="#6b7280">0%</text>
+        <text x="24" y="190" font-size="12" fill="#2b2f3a" transform="rotate(-90 24 190)" text-anchor="middle">記憶の残り具合</text>
+        <!-- 目盛り(横) -->
+        <text x="60" y="352" font-size="12" fill="#6b7280" text-anchor="start">覚えた直後</text>
+        <text x="210" y="352" font-size="12" fill="#6b7280" text-anchor="middle">1日後</text>
+        <text x="400" y="352" font-size="12" fill="#6b7280" text-anchor="middle">1週間後</text>
+        <text x="590" y="352" font-size="12" fill="#6b7280" text-anchor="middle">1ヶ月後</text>
+        <text x="340" y="372" font-size="11" fill="#9aa0ad" text-anchor="middle">時間の経過(模式図)</text>
+        <!-- 復習しない場合(グレー) -->
+        <path d="M60,60 C100,170 160,240 210,258 C330,290 480,302 590,308" fill="none" stroke="#b6bcc9" stroke-width="3" stroke-dasharray="7 5"/>
+        <text x="480" y="290" font-size="12.5" fill="#8a90a0">復習しない場合</text>
+        <!-- 復習した場合(ブルー) -->
+        <path d="M60,60 C110,140 170,200 210,225" fill="none" stroke="#4f6df5" stroke-width="3.5"/>
+        <path d="M210,60 C270,110 340,150 400,170" fill="none" stroke="#4f6df5" stroke-width="3.5"/>
+        <path d="M400,60 C470,90 530,105 590,115" fill="none" stroke="#4f6df5" stroke-width="3.5"/>
+        <text x="468" y="82" font-size="12.5" fill="#4f6df5" font-weight="bold">復習した場合</text>
+        <!-- 復習ジャンプ矢印 -->
+        <line x1="210" y1="225" x2="210" y2="70" stroke="#7b93ff" stroke-width="2" stroke-dasharray="3 3"/>
+        <polygon points="205,72 215,72 210,60" fill="#7b93ff"/>
+        <line x1="400" y1="170" x2="400" y2="70" stroke="#7b93ff" stroke-width="2" stroke-dasharray="3 3"/>
+        <polygon points="395,72 405,72 400,60" fill="#7b93ff"/>
+        <text x="218" y="120" font-size="12" fill="#4f6df5">復習で記憶が回復</text>
+        <text x="408" y="120" font-size="12" fill="#4f6df5">回復するたび</text>
+        <text x="408" y="136" font-size="12" fill="#4f6df5">忘れにくくなる</text>
+      </svg>
+      <figcaption>忘却曲線のイメージ(模式図)。復習しないと記憶は急速に失われる(グレー)。復習するたびに記憶は回復し、曲線の傾き=忘れる速さそのものが緩やかになっていく(ブルー)。</figcaption>
+    </figure>
 
     <h2>復習は「当日・翌日・1週間後・1ヶ月後」の4回</h2>
     <p>私が実践している復習スケジュールはこれだけです。</p>
