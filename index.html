@@ -274,6 +274,25 @@
   }
   .ad-box a:hover { background: var(--primary-dark); }
   .ad-box .ad-note { font-size: 11.5px; color: var(--muted); margin-top: 10px; }
+  .grade-tabs { display: flex; gap: 8px; margin-bottom: 14px; }
+  .grade-tab {
+    flex: 1;
+    padding: 10px 0;
+    border-radius: 999px;
+    border: 2px solid #e5e8f2;
+    background: #fff;
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--muted);
+    cursor: pointer;
+    transition: border-color .12s ease, color .12s ease;
+  }
+  .grade-tab.active {
+    border-color: var(--primary);
+    color: var(--primary);
+    background: rgba(79, 109, 245, .06);
+  }
+  .service-ad { margin-bottom: 10px; }
   .book-ad {
     border: 2px solid #e5e8f2;
     border-radius: 12px;
@@ -419,12 +438,34 @@
 <img border="0" width="1" height="1" src="https://www10.a8.net/0.gif?a8mat=4B7USU+9LWV8Y+2HOM+BWGDT" alt=""></div>
       </div>
 
-      <div class="section-title">🎥 中学生の方へ<span class="pr-badge">PR</span></div>
+      <div class="section-title">🎥 あなたに合う学習サービス<span class="pr-badge">PR</span></div>
       <div class="ad-box">
-        <p>どのタイプでも、「わからない単元をプロの授業でピンポイントに潰せる」映像授業は強力な味方になります。『スタディサプリ中学講座』は月額制でプロ講師の授業が見放題。自分のペースで進められるので、診断結果の勉強法と組み合わせやすいサービスです。</p>
-        <a href="https://px.a8.net/svt/ejp?a8mat=4B7USU+9W18J6+36T2+TWTFM" rel="nofollow">スタサプ</a>
-<img border="0" width="1" height="1" src="https://www19.a8.net/0.gif?a8mat=4B7USU+9W18J6+36T2+TWTFM" alt="">
-        <div class="ad-note">公式サイトで14日間の無料体験などの詳細を確認できます。</div>
+        <p>独学を補強するなら、プロ講師の映像授業が見放題の「スタディサプリ」と、添削指導で記述力を鍛える「Z会」が二大定番です。どちらも診断結果の勉強法と組み合わせやすく、公式サイトで無料体験・資料請求ができます。学年を選んでください:</p>
+        <div class="grade-tabs">
+          <button type="button" class="grade-tab" data-grade="elementary">小学生</button>
+          <button type="button" class="grade-tab active" data-grade="junior">中学生</button>
+          <button type="button" class="grade-tab" data-grade="senior">高校生</button>
+        </div>
+        <div class="grade-panel" data-grade="elementary" style="display:none;">
+          <div class="service-ad"><a href="https://px.a8.net/svt/ejp?a8mat=4B7USU+9UUDBM+36T2+ZQFQA" rel="nofollow">【公式】スタディサプリ小学講座</a>
+<img border="0" width="1" height="1" src="https://www13.a8.net/0.gif?a8mat=4B7USU+9UUDBM+36T2+ZQFQA" alt=""></div>
+          <div class="service-ad"><a href="https://px.a8.net/svt/ejp?a8mat=4B7USU+9Z0EK2+E0Q+CUBIQ" rel="nofollow">Ｚ会の通信教育 小学生コース</a>
+
+<img border="0" width="1" height="1" src="https://www11.a8.net/0.gif?a8mat=4B7USU+9Z0EK2+E0Q+CUBIQ" alt=""></div>
+        </div>
+        <div class="grade-panel" data-grade="junior">
+          <div class="service-ad"><a href="https://px.a8.net/svt/ejp?a8mat=4B7USU+9W18J6+36T2+TWTFM" rel="nofollow">スタサプ</a>
+<img border="0" width="1" height="1" src="https://www19.a8.net/0.gif?a8mat=4B7USU+9W18J6+36T2+TWTFM" alt=""></div>
+          <div class="service-ad"><a href="https://px.a8.net/svt/ejp?a8mat=4B7USU+9Z0EK2+E0Q+C9BCI" rel="nofollow">中学生のためのＺ会</a>
+<img border="0" width="1" height="1" src="https://www14.a8.net/0.gif?a8mat=4B7USU+9Z0EK2+E0Q+C9BCI" alt=""></div>
+        </div>
+        <div class="grade-panel" data-grade="senior" style="display:none;">
+          <div class="service-ad"><a href="https://px.a8.net/svt/ejp?a8mat=4B7USU+9X83QQ+36T2+69P02" rel="nofollow">【公式】スタディサプリ高校・大学受験講座</a>
+<img border="0" width="1" height="1" src="https://www18.a8.net/0.gif?a8mat=4B7USU+9X83QQ+36T2+69P02" alt=""></div>
+          <div class="service-ad"><a href="https://px.a8.net/svt/ejp?a8mat=4B7USU+9Z0EK2+E0Q+C0B9U" rel="nofollow">Ｚ会 高校生・大学受験生向け</a>
+<img border="0" width="1" height="1" src="https://www10.a8.net/0.gif?a8mat=4B7USU+9Z0EK2+E0Q+C0B9U" alt=""></div>
+        </div>
+        <div class="ad-note">映像授業で自分のペースで進めたいならスタディサプリ、添削でじっくり力を付けたいならZ会が目安です。</div>
       </div>
 
       <div class="share-row">
@@ -707,6 +748,16 @@ function showResult() {
 function restart() {
   startQuiz();
 }
+
+// 学年タブの切り替え
+document.querySelectorAll(".grade-tab").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".grade-tab").forEach(b => b.classList.toggle("active", b === btn));
+    document.querySelectorAll(".grade-panel").forEach(p => {
+      p.style.display = p.dataset.grade === btn.dataset.grade ? "" : "none";
+    });
+  });
+});
 </script>
 </body>
 </html>
